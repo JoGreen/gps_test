@@ -1,0 +1,17 @@
+{
+  "name": "gps_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "engines": {
+    "node": "8.11.1"
+  },
+  "scripts": {
+    "test": "@Jò"
+  },
+  "author": "@Jò",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

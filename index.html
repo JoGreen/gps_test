@@ -13,17 +13,47 @@
         margin: 0;
         padding: 0;
       }
+      .form-signin .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus
+{
+    z-index: 2;
+}
+.form-signin input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
     </style>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg&callback=getLocation">
     </script>
 </head>
 <body>
 <div id="map"></div>
-<p>Click the button to get your coordinates.</p>
 
-<button onclick="getLocation()">Try It</button>
-
+<form class="form-signin">
+                <input type="text" class="form-control" placeholder="your message" required autofocus>
+                
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Share</button>
+                
+                <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                </form>
+<!-- <button onclick="getLocation()">Try It</button>
+ -->
 <div id="mapholder"></div>
 <!-- AIzaSyAwQN_M0ComCUV-Ps-1K7nWnXp4uJhSDAU -->
 <!-- AIzaSyAwQN_M0ComCUV-Ps-1K7nWnXp4uJhSDAU -->
@@ -41,11 +71,11 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    var latlon = position.coords.latitude + "," + position.coords.longitude;
+    // var latlon = position.coords.latitude + "," + position.coords.longitude;
 
-    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg";
+    // var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg";
 
-    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+    // document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
     initMap(position.coords.latitude, position.coords.longitude)
 }
 // function showPosition(position) {
@@ -58,9 +88,24 @@ function showPosition(position) {
       function initMap(lat, long) {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: lat, lng: long},
-          zoom: 14
+          zoom: 16
         });
       }
+            var styles = {
+        default: null,
+        hide: [
+          {
+            featureType: 'poi',
+            stylers: [{visibility: 'off'}]
+          },
+          {
+            featureType: 'transit',
+            elementType: 'labels.icon',
+            stylers: [{visibility: 'off'}]
+          }
+        ]
+      };
+		map.setOptions({styles: styles['hide']});
     </script>
 
 </body>

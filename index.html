@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="/css/popup.css" rel="stylesheet">
 	<style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -14,37 +15,41 @@
         padding: 0;
       }
       .form-signin .form-control
-{
-    position: relative;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.form-signin .form-control:focus
-{
-    z-index: 2;
-}
-.form-signin input[type="text"]
-{
-    margin-bottom: -1px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
+		{
+		    position: relative;
+		    font-size: 16px;
+		    height: auto;
+		    padding: 10px;
+		    -webkit-box-sizing: border-box;
+		    -moz-box-sizing: border-box;
+		    box-sizing: border-box;
+		}
+		.form-signin .form-control:focus
+		{
+		    z-index: 2;
+		}
+		.form-signin input[type="text"]
+		{
+		    margin-bottom: -1px;
+		    border-bottom-left-radius: 0;
+		    border-bottom-right-radius: 0;
+		}
     </style>
+    <script <async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg&callback=getLocation">
+    </script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	
-	<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg&callback=getLocation">
-    </script>
+	
+    
 </head>
 <body>
 <div id="map"></div>
-
+<div id="content">
+      Hello world!
+    </div>
 <form class="form-signin">
                 <input type="text" class="form-control" placeholder="your message" required autofocus>
                 
@@ -53,15 +58,17 @@
                 
                 <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
                 </form>
-<!-- <button onclick="getLocation()">Try It</button>
- -->
+
 <div id="mapholder"></div>
-<!-- AIzaSyAwQN_M0ComCUV-Ps-1K7nWnXp4uJhSDAU -->
-<!-- AIzaSyAwQN_M0ComCUV-Ps-1K7nWnXp4uJhSDAU -->
-<!-- AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg -->
+
+<script src="/js/text_popup.js"></script>
 <script>
 	gkey = 'AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg';
-var x = document.getElementById("demo");
+	var x = document.getElementById("demo");
+	latitude = null
+	longitude = null
+	//var map, popup, Popup;
+
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -72,43 +79,68 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    // var latlon = position.coords.latitude + "," + position.coords.longitude;
-
-    // var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg";
-
-    // document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
     initMap(position.coords.latitude, position.coords.longitude)
 }
-// function showPosition(position) {
-//     x.innerHTML = "Latitude: " + position.coords.latitude + 
-//     "<br>Longitude: " + position.coords.longitude;
-//}
+
+  var map;
+  function initMap(lat, long, hide_things) {
+  	var map_style = {
+		        
+		styles: [
+		  {
+		    "featureType": "administrative",
+		    "elementType": "geometry",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  },
+		  {
+		    "featureType": "poi",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  },
+		  {
+		    "featureType": "road",
+		    "elementType": "labels.icon",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  },
+		  {
+		    "featureType": "transit",
+		    "stylers": [
+		      {
+		        "visibility": "off"
+		      }
+		    ]
+		  }
+		]
+		      };
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: lat, lng: long},
+      zoom: 16,
+      styles: map_style.styles
+    });
+  definePopupClass()
+  popup = new Popup(
+  new google.maps.LatLng(lat, long),
+  document.getElementById('content'));
+	  popup.setMap(map);
+  latitude = lat;
+  longitude = long;
 
 
-      var map;
-      function initMap(lat, long, hide_things) {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: lat, lng: long},
-          zoom: 16
-        });
-      }
-            var styles = {
-        default: null,
-        hide: [
-          {
-            featureType: 'poi',
-            stylers: [{visibility: 'off'}]
-          },
-          {
-            featureType: 'transit',
-            elementType: 'labels.icon',
-            stylers: [{visibility: 'off'}]
-          }
-        ]
-      };
-      function hide_things(){
-      	map.setOptions({styles: styles['hide']});
-      }
+  }
+    
+      
+  
 		
     </script>
 

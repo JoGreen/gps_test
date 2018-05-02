@@ -6,8 +6,10 @@
 
 <button onclick="getLocation()">Try It</button>
 
-<p id="demo"></p>
-
+<div id="mapholder"></div>
+<!-- AIzaSyAwQN_M0ComCUV-Ps-1K7nWnXp4uJhSDAU -->
+<!-- AIzaSyAwQN_M0ComCUV-Ps-1K7nWnXp4uJhSDAU -->
+<!-- AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg -->
 <script>
 var x = document.getElementById("demo");
 
@@ -20,9 +22,16 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
+    var latlon = position.coords.latitude + "," + position.coords.longitude;
+
+    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyAYfDkvy1MNYRXBX0a28hMlkE8pJXXCbhg";
+
+    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
 }
+// function showPosition(position) {
+//     x.innerHTML = "Latitude: " + position.coords.latitude + 
+//     "<br>Longitude: " + position.coords.longitude;
+//}
 </script>
 
 </body>
